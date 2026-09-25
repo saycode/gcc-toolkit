@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>India GCC Toolkit 2026 — by Sayan Bhattacharya, MSH India</title>
+<style>
+/* ── TOKENS ── */
+:root {
+  --ink:       #0D1117;
+  --ink-2:     #3D4550;
+  --ink-3:     #6B7280;
+  --rule:      #E5E8EC;
+  --bg:        #F7F8FA;
+  --white:     #FFFFFF;
+  --brand:     #1A56DB;
+  --brand-2:   #1048B8;
+  --accent:    #00B4D8;
+  --green:     #059669;
+  --amber:     #D97706;
+  --red:       #DC2626;
+  --purple:    #7C3AED;
+  --gold:      #B45309;
+  --radius:    12px;
+  --shadow:    0 1px 3px rgba(0,0,0,.07), 0 8px 24px rgba(0,0,0,.06);
+}
+
+/* ── RESET ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* ── HEADER ── */
+.site-header {
+  background: var(--ink);
+  padding: 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 12px rgba(0,0,0,.3);
+}
+.header-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.logo { font-size: 15px; font-weight: 700; color: #fff; letter-spacing: -.2px; }
+.logo span { color: var(--accent); }
+.nav { display: flex; gap: 4px; }
+.nav a {
+  font-size: 13px; font-weight: 600; color: rgba(255,255,255,.6);
+  padding: 6px 12px; border-radius: 7px; text-decoration: none;
+  transition: all .15s;
+}
+.nav a:hover, .nav a.active { background: rgba(255,255,255,.1); color: #fff; }
+
+/* ── HERO ── */
+.hero {
+  background: linear-gradient(135deg, var(--ink) 0%, #1A2435 45%, #0F3460 100%);
+  padding: 72px 24px 60px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 80% 50% at 50% -10%, rgba(0,180,216,.18), transparent);
+  pointer-events: none;
+}
+.hero-eyebrow {
+  font-size: 12px; font-weight: 700; letter-spacing: 2px;
+  color: var(--accent); text-transform: uppercase; margin-bottom: 18px;
+}
+.hero h1 {
+  font-size: clamp(28px, 5vw, 52px); font-weight: 900; color: #fff;
+  line-height: 1.1; margin-bottom: 16px; max-width: 700px; margin-left: auto; margin-right: auto;
+}
+.hero h1 em { color: var(--accent); font-style: normal; }
+.hero-sub {
+  font-size: 17px; color: rgba(255,255,255,.65); max-width: 560px;
+  margin: 0 auto 36px; line-height: 1.6;
+}
+.tool-pills {
+  display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 40px;
+}
+.pill {
+  background: rgba(255,255,255,.1); border: 1.5px solid rgba(255,255,255,.18);
+  border-radius: 30px; padding: 8px 18px;
+  font-size: 13px; font-weight: 600; color: #fff;
+  cursor: pointer; transition: all .15s; text-decoration: none;
+}
+.pill:hover { background: var(--brand); border-color: var(--brand); }
+.hero-author {
+  font-size: 13px; color: rgba(255,255,255,.4);
+}
+.hero-author strong { color: rgba(255,255,255,.7); }
+
+/* ── SECTION WRAPPER ── */
+.tool-section {
+  max-width: 1100px; margin: 0 auto; padding: 56px 24px 24px;
+}
+.section-header { margin-bottom: 28px; }
+.section-num {
+  font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--brand); margin-bottom: 8px;
+}
+.section-title {
+  font-size: 26px; font-weight: 800; color: var(--ink); margin-bottom: 6px;
+}
+.section-desc { font-size: 15px; color: var(--ink-2); max-width: 600px; }
+.divider { border: none; border-top: 1px solid var(--rule); margin: 48px 0 0; }
+
+/* ── CARD ── */
+.card {
+  background: var(--white); border: 1.5px solid var(--rule);
+  border-radius: var(--radius); box-shadow: var(--shadow);
+  overflow: hidden;
+}
+.card-head {
+  padding: 16px 22px; border-bottom: 1px solid var(--rule);
+  display: flex; align-items: center; justify-content: space-between;
+  background: var(--bg);
+}
+.card-head-title { font-size: 14px; font-weight: 700; color: var(--ink); }
+.card-body { padding: 22px; }
+
+/* ── TOOL 1 — COST CALCULATOR ── */
+.calc-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+}
+@media(max-width:640px){ .calc-grid { grid-template-columns: 1fr; } }
+
+.input-group { display: flex; flex-direction: column; gap: 6px; }
+.input-group label {
+  font-size: 12px; font-weight: 700; color: var(--ink-2); text-transform: uppercase; letter-spacing: .8px;
+}
+.input-group select,
+.input-group input[type=number] {
+  border: 1.5px solid var(--rule); border-radius: 8px;
+  padding: 10px 14px; font-size: 15px; color: var(--ink);
+  background: var(--white); appearance: none; outline: none;
+  transition: border-color .15s;
+  width: 100%;
+}
+.input-group select:focus,
+.input-group input[type=number]:focus { border-color: var(--brand); }
+
+.calc-hint { font-size: 11px; color: var(--ink-3); margin-top: 2px; }
+
+.result-panel {
+  background: var(--ink); border-radius: var(--radius);
+  padding: 24px; margin-top: 20px; color: #fff;
+}
+.result-panel h3 { font-size: 13px; font-weight: 600; color: rgba(255,255,255,.5); margin-bottom: 16px; }
+.result-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+@media(max-width:640px){ .result-grid { grid-template-columns: 1fr 1fr; } }
+.result-item {}
+.result-label { font-size: 11px; color: rgba(255,255,255,.45); margin-bottom: 4px; }
+.result-value { font-size: 20px; font-weight: 800; color: var(--accent); }
+.result-sub { font-size: 11px; color: rgba(255,255,255,.4); margin-top: 1px; }
+.result-total {
+  border-top: 1px solid rgba(255,255,255,.1); margin-top: 16px; padding-top: 16px;
+  display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap;
+}
+.result-total-label { font-size: 13px; color: rgba(255,255,255,.5); }
+.result-total-value { font-size: 28px; font-weight: 900; color: #fff; }
+.result-total-usd { font-size: 14px; color: var(--accent); font-weight: 600; }
+
+.slider-row { display: flex; align-items: center; gap: 12px; margin-top: 16px; }
+.slider-row label { font-size: 12px; font-weight: 700; color: var(--ink-2); white-space: nowrap; min-width: 140px; }
+.slider-row input[type=range] { flex: 1; accent-color: var(--brand); }
+.slider-val { font-size: 13px; font-weight: 700; color: var(--brand); min-width: 48px; text-align: right; }
+
+.cost-breakdown { margin-top: 18px; }
+.cost-bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 9px; }
+.cost-bar-label { font-size: 12px; color: var(--ink-2); min-width: 130px; }
+.cost-bar-track { flex: 1; height: 8px; background: var(--rule); border-radius: 4px; overflow: hidden; }
+.cost-bar-fill { height: 100%; border-radius: 4px; transition: width .4s ease; }
+.cost-bar-pct { font-size: 12px; font-weight: 700; min-width: 42px; text-align: right; }
+
+/* ── TOOL 2 — CHECKLIST ── */
+.phase-tabs { display: flex; gap: 6px; margin-bottom: 20px; flex-wrap: wrap; }
+.phase-tab {
+  padding: 7px 16px; border-radius: 20px; font-size: 13px; font-weight: 600;
+  cursor: pointer; border: 1.5px solid var(--rule); background: var(--white);
+  color: var(--ink-2); transition: all .15s;
+}
+.phase-tab.active { background: var(--brand); color: #fff; border-color: var(--brand); }
+
+.checklist-phase { display: none; }
+.checklist-phase.active { display: block; }
+
+.check-item {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 13px 0; border-bottom: 1px solid var(--rule);
+}
+.check-item:last-child { border-bottom: none; }
+.check-item input[type=checkbox] {
+  width: 18px; height: 18px; accent-color: var(--green);
+  margin-top: 2px; flex-shrink: 0; cursor: pointer;
+}
+.check-content {}
+.check-title { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 2px; }
+.check-desc { font-size: 12px; color: var(--ink-3); line-height: 1.5; }
+.check-tag {
+  display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 8px;
+  border-radius: 10px; margin-left: 8px; vertical-align: middle;
+}
+.tag-critical { background: #FEE2E2; color: var(--red); }
+.tag-legal { background: #EDE9FE; color: var(--purple); }
+.tag-hr { background: #DCFCE7; color: var(--green); }
+.tag-ops { background: #DBEAFE; color: var(--brand); }
+
+.progress-bar-wrap { margin-bottom: 18px; }
+.progress-label { font-size: 12px; font-weight: 600; color: var(--ink-2); margin-bottom: 6px; display: flex; justify-content: space-between; }
+.progress-track { height: 8px; background: var(--rule); border-radius: 4px; overflow: hidden; }
+.progress-fill { height: 100%; background: var(--green); border-radius: 4px; transition: width .3s; }
+
+/* ── TOOL 3 — ORG CHART ── */
+.org-controls { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+.org-btn {
+  padding: 7px 16px; border-radius: 8px; font-size: 13px; font-weight: 600;
+  cursor: pointer; border: 1.5px solid var(--rule); background: var(--white);
+  color: var(--ink-2); transition: all .15s;
+}
+.org-btn.active { background: var(--brand); color: #fff; border-color: var(--brand); }
+
+.org-stage { display: none; }
+.org-stage.active { display: block; }
+
+.org-tree { padding: 8px 0; }
+.org-level { display: flex; justify-content: center; gap: 12px; margin-bottom: 0; flex-wrap: wrap; }
+.org-connector { text-align: center; color: var(--rule); font-size: 20px; padding: 4px 0; }
+
+.org-box {
+  border-radius: 10px; padding: 12px 16px; min-width: 160px; max-width: 200px;
+  text-align: center; border: 2px solid; position: relative; cursor: default;
+  transition: transform .15s, box-shadow .15s;
+}
+.org-box:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,.1); }
+.org-box-title { font-size: 13px; font-weight: 800; margin-bottom: 3px; }
+.org-box-sub { font-size: 11px; opacity: .7; }
+.org-box-band { position: absolute; top: 0; left: 0; right: 0; height: 4px; border-radius: 8px 8px 0 0; }
+
+.ob-cxo { background: #EFF6FF; border-color: #93C5FD; }
+.ob-cxo .org-box-title { color: #1D4ED8; }
+.ob-cxo .org-box-band { background: #1D4ED8; }
+
+.ob-vp { background: #F5F3FF; border-color: #C4B5FD; }
+.ob-vp .org-box-title { color: #6D28D9; }
+.ob-vp .org-box-band { background: #6D28D9; }
+
+.ob-dir { background: #F0FDF4; border-color: #6EE7B7; }
+.ob-dir .org-box-title { color: #047857; }
+.ob-dir .org-box-band { background: #047857; }
+
+.ob-mgr { background: #FFF7ED; border-color: #FCD34D; }
+.ob-mgr .org-box-title { color: #D97706; }
+.ob-mgr .org-box-band { background: #D97706; }
+
+.ob-ic { background: #F9FAFB; border-color: #D1D5DB; }
+.ob-ic .org-box-title { color: #374151; }
+.ob-ic .org-box-band { background: #9CA3AF; }
+
+.ob-hq { background: linear-gradient(135deg,#0D1117,#1A2435); border-color: #00B4D8; }
+.ob-hq .org-box-title { color: #67E8F9; }
+.ob-hq .org-box-sub { color: rgba(255,255,255,.5); }
+.ob-hq .org-box-band { background: var(--accent); }
+
+.org-line { width: 2px; background: var(--rule); height: 20px; margin: 0 auto; }
+.org-row { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; position: relative; }
+.org-row::before {
+  content: ''; position: absolute; top: 0; left: 50%; width: 80%;
+  transform: translateX(-50%); height: 1px; background: var(--rule);
+}
+
+.hc-badge {
+  font-size: 10px; font-weight: 700; background: rgba(0,0,0,.06);
+  border-radius: 10px; padding: 2px 8px; margin-top: 5px;
+  display: inline-block; color: var(--ink-2);
+}
+
+/* ── TOOL 4 — BUDGET PLANNER ── */
+.budget-table { width: 100%; border-collapse: separate; border-spacing: 0 5px; }
+.budget-table th {
+  font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+  color: var(--ink-3); padding: 6px 14px; text-align: left;
+}
+.budget-table td { padding: 11px 14px; font-size: 14px; }
+.budget-table tr td:first-child { border-radius: 8px 0 0 8px; }
+.budget-table tr td:last-child { border-radius: 0 8px 8px 0; }
+.budget-row-a td { background: #EFF6FF; }
+.budget-row-b td { background: #F5F3FF; }
+.budget-row-c td { background: #F0FDF4; }
+.budget-row-d td { background: #FFF7ED; }
+.budget-row-e td { background: #FFF5F5; }
+.budget-row-f td { background: #FFFBEB; }
+.budget-total td { background: var(--ink); color: #fff; font-weight: 800; font-size: 15px; }
+.bcat { font-weight: 700; font-size: 13px; }
+.bcat-a { color: #1D4ED8; } .bcat-b { color: #6D28D9; } .bcat-c { color: #047857; }
+.bcat-d { color: #D97706; } .bcat-e { color: #DC2626; } .bcat-f { color: #B45309; }
+
+.budget-input {
+  border: 1.5px solid transparent; border-radius: 6px; padding: 5px 8px;
+  font-size: 14px; font-weight: 700; color: var(--ink); background: rgba(0,0,0,.04);
+  width: 120px; text-align: right;
+  transition: border-color .15s;
+}
+.budget-input:focus { border-color: var(--brand); outline: none; background: var(--white); }
+
+.budget-summary {
+  display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin-top: 20px;
+}
+@media(max-width:640px){ .budget-summary { grid-template-columns: 1fr 1fr; } }
+.budget-sum-card {
+  border-radius: 10px; padding: 16px; text-align: center; border: 1.5px solid;
+}
+.bsc-1 { background: #EFF6FF; border-color: #93C5FD; }
+.bsc-2 { background: #F0FDF4; border-color: #6EE7B7; }
+.bsc-3 { background: #FFF7ED; border-color: #FCD34D; }
+.bsc-4 { background: linear-gradient(135deg,#0D1117,#1A2435); border-color: #00B4D8; }
+.bsc-n { font-size: 22px; font-weight: 900; margin-bottom: 4px; }
+.bsc-1 .bsc-n { color: #1D4ED8; }
+.bsc-2 .bsc-n { color: #047857; }
+.bsc-3 .bsc-n { color: #D97706; }
+.bsc-4 .bsc-n { color: #67E8F9; }
+.bsc-l { font-size: 11px; color: var(--ink-3); }
+.bsc-4 .bsc-l { color: rgba(255,255,255,.5); }
+
+/* ── DOWNLOAD / SHARE ── */
+.cta-band {
+  background: linear-gradient(135deg, var(--ink) 0%, #0F3460 100%);
+  padding: 56px 24px;
+  text-align: center;
+  margin-top: 48px;
+}
+.cta-band h2 { font-size: 28px; font-weight: 900; color: #fff; margin-bottom: 10px; }
+.cta-band p { font-size: 16px; color: rgba(255,255,255,.6); margin-bottom: 28px; }
+.cta-btn {
+  display: inline-block; background: var(--accent); color: var(--ink);
+  font-size: 15px; font-weight: 800; padding: 14px 32px;
+  border-radius: 10px; text-decoration: none; margin: 6px;
+  transition: all .15s;
+}
+.cta-btn:hover { background: #fff; }
+.cta-btn-ghost {
+  display: inline-block; border: 2px solid rgba(255,255,255,.3); color: #fff;
+  font-size: 15px; font-weight: 700; padding: 12px 28px;
+  border-radius: 10px; text-decoration: none; margin: 6px;
+  transition: all .15s;
+}
+.cta-btn-ghost:hover { background: rgba(255,255,255,.1); }
+
+.author-card {
+  background: rgba(255,255,255,.06); border: 1.5px solid rgba(255,255,255,.12);
+  border-radius: 14px; padding: 20px 28px;
+  display: flex; align-items: center; gap: 18px;
+  max-width: 580px; margin: 32px auto 0; text-align: left;
+}
+.author-avatar {
+  width: 52px; height: 52px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--brand), var(--accent));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; font-weight: 900; color: #fff; flex-shrink: 0;
+}
+.author-name { font-size: 16px; font-weight: 800; color: #fff; margin-bottom: 3px; }
+.author-role { font-size: 13px; color: rgba(255,255,255,.55); line-height: 1.4; }
+
+/* ── PRINT ── */
+@media print { .site-header, .cta-band, .nav { display: none; } }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="logo">India <span>GCC Toolkit</span> 2026</div>
+    <nav class="nav">
+      <a href="#cost" class="active">Cost Calculator</a>
+      <a href="#checklist">Checklist</a>
+      <a href="#orgchart">Org Chart</a>
+      <a href="#budget">Budget</a>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow">Free Resource · Updated Sep 2026</div>
+  <h1>The India GCC<br><em>Starter Toolkit</em></h1>
+  <p class="hero-sub">4 practical tools for US companies evaluating, planning, or building a Global Capability Centre in India. Use them directly — no signup required.</p>
+  <div class="tool-pills">
+    <a href="#cost" class="pill">💰 Cost Calculator</a>
+    <a href="#checklist" class="pill">✅ 90-Day Checklist</a>
+    <a href="#orgchart" class="pill">🏢 Org Chart Builder</a>
+    <a href="#budget" class="pill">📊 Budget Planner</a>
+  </div>
+  <div class="hero-author">Built by <strong>Sayan Bhattacharya</strong> · MD, MSH India · 12 years building GCCs in India</div>
+</section>
+
+
+<!-- ══════════════════════════════════════ -->
+<!-- TOOL 1 — COST CALCULATOR -->
+<!-- ══════════════════════════════════════ -->
+<div id="cost" class="tool-section">
+  <div class="section-header">
+    <div class="section-num">Tool 01</div>
+    <div class="section-title">GCC Year-1 Cost Calculator</div>
+    <div class="section-desc">Adjust the inputs to get a realistic first-year cost estimate for your India GCC. Exchange rate: 1 USD = Rs 94.5.</div>
+  </div>
+
+  <div class="card">
+    <div class="card-head">
+      <div class="card-head-title">Configure Your GCC</div>
+      <span style="font-size:12px;color:var(--ink-3);">All figures in INR Crore unless noted</span>
+    </div>
+    <div class="card-body">
+      <div class="calc-grid">
+        <div class="input-group">
+          <label>Headcount (FTE)</label>
+          <input type="number" id="hc" value="50" min="10" max="500" oninput="calcCost()">
+          <div class="calc-hint">Total full-time employees, Year 1</div>
+        </div>
+        <div class="input-group">
+          <label>City</label>
+          <select id="city" onchange="calcCost()">
+            <option value="blr">Bengaluru (benchmark)</option>
+            <option value="hyd">Hyderabad (−17%)</option>
+            <option value="pun">Pune (−25%)</option>
+            <option value="che">Chennai (−18%)</option>
+            <option value="ncr">NCR / Gurugram (at par)</option>
+            <option value="kol">Kolkata (−35%)</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label>Team Profile</label>
+          <select id="profile" onchange="calcCost()">
+            <option value="junior">Junior-heavy (avg Rs 12 LPA)</option>
+            <option value="mid" selected>Mid-level (avg Rs 20 LPA)</option>
+            <option value="senior">Senior-heavy (avg Rs 32 LPA)</option>
+            <option value="mixed">Mixed — leadership + delivery (avg Rs 24 LPA)</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label>Entity Model</label>
+          <select id="entity" onchange="calcCost()">
+            <option value="wos">Wholly Owned Subsidiary</option>
+            <option value="eor">Employer of Record</option>
+            <option value="bot">Build-Operate-Transfer</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Sliders -->
+      <div class="slider-row">
+        <label>Attrition buffer (%)</label>
+        <input type="range" id="attrition" min="5" max="30" value="15" oninput="calcCost(); document.getElementById('attrVal').textContent=this.value+'%'">
+        <div class="slider-val" id="attrVal">15%</div>
+      </div>
+      <div class="slider-row">
+        <label>Salary inflation (Y1)</label>
+        <input type="range" id="inflation" min="6" max="15" value="10" oninput="calcCost(); document.getElementById('infVal').textContent=this.value+'%'">
+        <div class="slider-val" id="infVal">10%</div>
+      </div>
+
+      <!-- Result Panel -->
+      <div class="result-panel" id="resultPanel">
+        <h3>ESTIMATED YEAR-1 TOTAL COST</h3>
+        <div class="result-grid">
+          <div class="result-item">
+            <div class="result-label">People & Benefits</div>
+            <div class="result-value" id="rPeople">—</div>
+            <div class="result-sub">~60% of total</div>
+          </div>
+          <div class="result-item">
+            <div class="result-label">Real Estate</div>
+            <div class="result-value" id="rRE">—</div>
+            <div class="result-sub">~10% of total</div>
+          </div>
+          <div class="result-item">
+            <div class="result-label">Setup & Compliance</div>
+            <div class="result-value" id="rSetup">—</div>
+            <div class="result-sub">One-time, Year 1</div>
+          </div>
+          <div class="result-item">
+            <div class="result-label">Recruitment</div>
+            <div class="result-value" id="rRecruit">—</div>
+            <div class="result-sub">15–18% of CTC</div>
+          </div>
+          <div class="result-item">
+            <div class="result-label">Leadership Premium</div>
+            <div class="result-value" id="rLeader">—</div>
+            <div class="result-sub">Incl. sign-on</div>
+          </div>
+          <div class="result-item">
+            <div class="result-label">Attrition Buffer</div>
+            <div class="result-value" id="rAttr">—</div>
+            <div class="result-sub">Risk provision</div>
+          </div>
+        </div>
+        <div class="result-total">
+          <div class="result-total-label">Total Year-1 Estimate</div>
+          <div class="result-total-value" id="rTotal">—</div>
+          <div class="result-total-usd" id="rTotalUSD">—</div>
+        </div>
+      </div>
+
+      <!-- Cost Breakdown Bars -->
+      <div class="cost-breakdown" id="costBars">
+        <div style="font-size:12px;font-weight:700;color:var(--ink-2);margin-bottom:12px;margin-top:4px;">COST BREAKDOWN</div>
+        <div class="cost-bar-row">
+          <div class="cost-bar-label">People & Benefits</div>
+          <div class="cost-bar-track"><div class="cost-bar-fill" id="bPeople" style="background:#1A56DB;width:60%"></div></div>
+          <div class="cost-bar-pct" id="pPeople" style="color:#1A56DB">60%</div>
+        </div>
+        <div class="cost-bar-row">
+          <div class="cost-bar-label">Real Estate</div>
+          <div class="cost-bar-track"><div class="cost-bar-fill" id="bRE" style="background:#7C3AED;width:10%"></div></div>
+          <div class="cost-bar-pct" id="pRE" style="color:#7C3AED">10%</div>
+        </div>
+        <div class="cost-bar-row">
+          <div class="cost-bar-label">Setup & Compliance</div>
+          <div class="cost-bar-track"><div class="cost-bar-fill" id="bSetup" style="background:#059669;width:8%"></div></div>
+          <div class="cost-bar-pct" id="pSetup" style="color:#059669">8%</div>
+        </div>
+        <div class="cost-bar-row">
+          <div class="cost-bar-label">Recruitment</div>
+          <div class="cost-bar-track"><div class="cost-bar-fill" id="bRecruit" style="background:#D97706;width:10%"></div></div>
+          <div class="cost-bar-pct" id="pRecruit" style="color:#D97706">10%</div>
+        </div>
+        <div class="cost-bar-row">
+          <div class="cost-bar-label">Leadership + Attrition</div>
+          <div class="cost-bar-track"><div class="cost-bar-fill" id="bOther" style="background:#DC2626;width:12%"></div></div>
+          <div class="cost-bar-pct" id="pOther" style="color:#DC2626">12%</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider" style="max-width:1100px;margin:48px auto 0;">
+
+
+<!-- ══════════════════════════════════════ -->
+<!-- TOOL 2 — COMPLIANCE CHECKLIST -->
+<!-- ══════════════════════════════════════ -->
+<div id="checklist" class="tool-section">
+  <div class="section-header">
+    <div class="section-num">Tool 02</div>
+    <div class="section-title">90-Day GCC Launch Checklist</div>
+    <div class="section-desc">Check off items as you complete them. Progress saves in your browser session.</div>
+  </div>
+
+  <div class="card">
+    <div class="card-head">
+      <div class="card-head-title">Launch Checklist</div>
+    </div>
+    <div class="card-body">
+      <div class="progress-bar-wrap">
+        <div class="progress-label">
+          <span>Overall progress</span>
+          <span id="progressPct">0 / 24 complete</span>
+        </div>
+        <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+      </div>
+
+      <div class="phase-tabs">
+        <div class="phase-tab active" onclick="showPhase('p1',this)">Days 0–30 · Strategy</div>
+        <div class="phase-tab" onclick="showPhase('p2',this)">Days 30–60 · Compliance</div>
+        <div class="phase-tab" onclick="showPhase('p3',this)">Days 60–90 · Go-Live</div>
+        <div class="phase-tab" onclick="showPhase('p4',this)">Ongoing · Operations</div>
+      </div>
+
+      <!-- Phase 1 -->
+      <div class="checklist-phase active" id="p1">
+        <div class="check-item"><input type="checkbox" class="cl-check" onchange="updateProgress()"><div class="check-content"><div class="check-title">Define GCC purpose <span class="check-tag tag-critical">Critical</span></div><div class="check-desc">Cost centre, innovation hub, or product engineering centre — this shapes every other decision.</div></div></div>
+        <div class="check-item"><input type="checkbox" class="cl-check" onchange="updateProgress()"><div class="check-content"><div class="check-title">Choose entity model <span class="check-tag tag-legal">Legal</span></div><div class="check-desc">WOS vs EOR vs BOT. Choose for the phase you are in, not where you want to be.</div></div></div>
+        <div class="check-item"><input type="checkbox" class="cl-check" onchange="updateProgress()"><div class="check-content"><div class="check-title">Select city <span class="check-tag tag-ops">Ops</span></div><div class="check-desc">Mandate, budget, and attrition tolerance first. City rankings second.</div></div></div>
+        <div class="check-item"><input type="checkbox" class="cl-check" onchange="updateProgress()"><div class="check-content"><div class="check-title">Begin MCA entity registration <span class="check-tag tag-legal">Legal</span></div><div class="check-desc">Takes 4–6 weeks. Start Day 1 — not after city or team decisions are made.</div></div></div>
+        <div class="check-item"><input type="checkbox" class="cl-check" onchange="updateProgress()"><div class="check-content"><div class="check-title">Appoint single execution owner <span class="check-tag tag-critical">Critical</span></div><div class="check-desc">One person accountable for India build. Fragmented ownership = guaranteed delays.</div></div></div>
+        <div class="check-item"><input type="checkbox" class="cl-check" onchange="updateProgress()"><div class="check-content"><div class="check-title">Begin GCC head search in parallel <span class="check-tag tag-hr">HR</span></div><div class="check-desc">Never wait for entity to be done. The best candidates need 12–16 weeks to close.</div></div></div>
+      </div>
+
+      <!-- Phase 2 -->
+      <div class="checklist-phase" id="p2">
+        <div class="check-item"><input type="checkbox" class="cl-check" onchange="updateProgress()"><div class="check-content"><div class="check-title">PAN and TAN registration <span class="check-tag tag-legal">Legal</span></div><div class="check-desc">Required before any financial transactions or payroll processing.</div></div></div>
+        <div class="check-item"><input type="checkbox" class="cl-check" onchange="updateProgress()"><div class="check-content"><div class="check-title">GST registration <span class="check-tag tag-legal">Legal</span></div><div class="check-desc">Threshold-based but advisable from the start for intercompany billing.</div></div></div>
+        <div class="check-item"><input type="checkbox" class="cl-check" onchange="updateProgress()"><div class="check-content"><div class="check-title">PF and ESIC registration <span class="check-tag tag-critical">Critical</span></div><div class="check-desc">Mandatory before first payroll. A missed PF registration can hold up your first hires.</div></div></div>
+        <div class="check-item"><input type="checkbox" class="cl-check" onchange="updateProgress()"><div class="check-content"><div class="check-title">Shops & Establishments Act registration <span class="check-tag tag-legal">Legal</span></div><div class="check-desc">State-specific. Bengaluru, Hyderabad, Pune, and Kolkata each have different forms.</div></div></div>
+        <div class="check-item"><input type="checkbox" class="cl-check" onchange="updateProgress()"><div class="check-content"><div class="check-title">Transfer pricing framework with HQ <span class="check-tag tag-legal">Legal</span></div><div class="check-desc">Define intercompany service agreement and pricing. Not an afterthought — shapes tax structure.</div></div></div>
+        <div class="check-item"><input type="checkbox" class="cl-check" onchange="updateProgress()"><div class="check-content"><div class="check-title">DPDP Act compliance plan <span class="check-tag tag-critical">Critical</span></div><div class="check-desc">Consent Manager integration required by Nov 2026. Start architecture now.</div></div></div>
+        <div class="check-item"><input type="checkbox" class="cl-check" onchange="updateProgress()"><div class="check-content"><div class="check-title">POSH Internal Complaints Committee <span class="check-tag tag-hr">HR</span></div><div class="check-desc">Mandatory under Prevention of Sexual Harassment Act 2013. Must be operational at first hire.</div></div></div>
+        <div class="check-item"><input type="checkbox" class="cl-check" onchange="updateProgress()"><div class="check-content"><div class="check-title">GCC head confirmed or joined <span class="check-tag tag-critical">Critical</span></div><div class="check-desc">All subsequent senior hires should flow through the GCC head — not around them.</div></div></div>
+        <div class="check-item"><input type="checkbox" class="cl-check" onchange="updateProgress()"><div class="check-content"><div class="check-title">First 5–10 technical hires sourced <span class="check-tag tag-hr">HR</span></div><div class="check-desc">Parallel to compliance. Don't wait for every legal box to be checked before sourcing talent.</div></div></div>
+      </div>
+
+      <!-- Phase 3 -->
+      <div class="checklist-phase" id="p3">
+        <div class="check-item"><input type="checkbox" class="cl-check" onchange="updateProgress()"><div class="check-content"><div class="check-title">Physical or hybrid workspace live <span class="check-tag tag-ops">Ops</span></div><div class="check-desc">Leased space or co-working ready with network, security, and access controls in place.</div></div></div>
+        <div class="check-item"><input type="checkbox" class="cl-check" onchange="updateProgress()"><div class="check-content"><div class="check-title">IT infrastructure and security environment <span class="check-tag tag-ops">Ops</span></div><div class="check-desc">Collaboration platforms, VPN, endpoint security, data residency requirements met.</div></div></div>
+        <div class="check-item"><input type="checkbox" class="cl-check" onchange="updateProgress()"><div class="check-content"><div class="check-title">KPIs defined between HQ and GCC <span class="check-tag tag-ops">Ops</span></div><div class="check-desc">How will you measure success in Year 1? Delivery velocity, quality metrics, hiring milestones.</div></div></div>
+        <div class="check-item"><input type="checkbox" class="cl-check" onchange="updateProgress()"><div class="check-content"><div class="check-title">First delivery milestone agreed <span class="check-tag tag-ops">Ops</span></div><div class="check-desc">A concrete early win for the GCC team to deliver. Sets culture and pace for everything after.</div></div></div>
+        <div class="check-item"><input type="checkbox" class="cl-check" onchange="updateProgress()"><div class="check-content"><div class="check-title">Cultural integration plan with HQ <span class="check-tag tag-hr">HR</span></div><div class="check-desc">Not an HR formality. Shared rituals, joint sprints, leadership visibility — from Day 1.</div></div></div>
+      </div>
+
+      <!-- Phase 4 -->
+      <div class="checklist-phase" id="p4">
+        <div class="check-item"><input type="checkbox" class="cl-check" onchange="updateProgress()"><div class="check-content"><div class="check-title">Monthly compliance calendar running <span class="check-tag tag-legal">Legal</span></div><div class="check-desc">PF filings, TDS, professional tax, GST returns — set up automated reminders.</div></div></div>
+        <div class="check-item"><input type="checkbox" class="cl-check" onchange="updateProgress()"><div class="check-content"><div class="check-title">Salary benchmarking — annual review <span class="check-tag tag-hr">HR</span></div><div class="check-desc">India senior leadership comp is inflating 8–12% annually. Stale benchmarks lose people.</div></div></div>
+        <div class="check-item"><input type="checkbox" class="cl-check" onchange="updateProgress()"><div class="check-content"><div class="check-title">GCC maturity assessment — quarterly <span class="check-tag tag-ops">Ops</span></div><div class="check-desc">Which maturity stage are you at? Plan transition to next stage before you need it.</div></div></div>
+        <div class="check-item"><input type="checkbox" class="cl-check" onchange="updateProgress()"><div class="check-content"><div class="check-title">Agentic AI integration roadmap <span class="check-tag tag-ops">Ops</span></div><div class="check-desc">58% of GCCs investing in Agentic AI in 2026. What tasks will you automate first?</div></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider" style="max-width:1100px;margin:48px auto 0;">
+
+
+<!-- ══════════════════════════════════════ -->
+<!-- TOOL 3 — ORG CHART -->
+<!-- ══════════════════════════════════════ -->
+<div id="orgchart" class="tool-section">
+  <div class="section-header">
+    <div class="section-num">Tool 03</div>
+    <div class="section-title">GCC Org Chart by Stage</div>
+    <div class="section-desc">Select your GCC maturity stage to see the recommended org structure and headcount mix.</div>
+  </div>
+
+  <div class="card">
+    <div class="card-head">
+      <div class="card-head-title">Org Structure Builder</div>
+    </div>
+    <div class="card-body">
+      <div class="org-controls">
+        <div class="org-btn active" onclick="showOrg('stage1',this)">Stage 1 · Pilot (20–50)</div>
+        <div class="org-btn" onclick="showOrg('stage2',this)">Stage 2 · Scale (50–150)</div>
+        <div class="org-btn" onclick="showOrg('stage3',this)">Stage 3 · Strategic (150–400)</div>
+        <div class="org-btn" onclick="showOrg('stage4',this)">Stage 4 · Innovation (400+)</div>
+      </div>
+
+      <!-- Stage 1 -->
+      <div class="org-stage active" id="stage1">
+        <div style="background:#EFF6FF;border-radius:10px;padding:12px 16px;margin-bottom:16px;font-size:13px;color:#1D4ED8;">
+          <strong>Stage 1 — Pilot (20–50 FTE)</strong> · Focus: prove the model, establish delivery, set culture. Lean structure, high accountability.
+        </div>
+        <div class="org-tree">
+          <div class="org-level" style="margin-bottom:12px;">
+            <div class="ob-hq org-box"><div class="org-box-band"></div><div class="org-box-title">US Parent / HQ</div><div class="org-box-sub">Global sponsor</div></div>
+          </div>
+          <div class="org-line"></div>
+          <div class="org-level" style="margin-bottom:12px;">
+            <div class="ob-cxo org-box"><div class="org-box-band"></div><div class="org-box-title">GCC Head / Country Manager</div><div class="org-box-sub">Reports to global CXO<div class="hc-badge">1 person</div></div></div>
+          </div>
+          <div class="org-line"></div>
+          <div class="org-level" style="gap:24px;margin-bottom:12px;">
+            <div class="ob-dir org-box"><div class="org-box-band"></div><div class="org-box-title">Engineering Lead</div><div class="org-box-sub">Tech delivery<div class="hc-badge">1 + 8–12 ICs</div></div></div>
+            <div class="ob-dir org-box"><div class="org-box-band"></div><div class="org-box-title">Ops & Finance</div><div class="org-box-sub">Compliance + admin<div class="hc-badge">2–3 people</div></div></div>
+            <div class="ob-dir org-box"><div class="org-box-band"></div><div class="org-box-title">HR / TA</div><div class="org-box-sub">Hiring + culture<div class="hc-badge">1–2 people</div></div></div>
+          </div>
+          <div class="org-level">
+            <div class="ob-ic org-box" style="min-width:300px;max-width:400px;"><div class="org-box-band"></div><div class="org-box-title">Individual Contributors</div><div class="org-box-sub">Engineers · Analysts · Designers<div class="hc-badge">20–35 ICs</div></div></div>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px;">
+          <div style="background:#F0FDF4;border-radius:8px;padding:12px;text-align:center;"><div style="font-size:20px;font-weight:900;color:#059669;">70%</div><div style="font-size:11px;color:var(--ink-3);">ICs & delivery</div></div>
+          <div style="background:#EFF6FF;border-radius:8px;padding:12px;text-align:center;"><div style="font-size:20px;font-weight:900;color:#1D4ED8;">20%</div><div style="font-size:11px;color:var(--ink-3);">Management</div></div>
+          <div style="background:#FFF7ED;border-radius:8px;padding:12px;text-align:center;"><div style="font-size:20px;font-weight:900;color:#D97706;">10%</div><div style="font-size:11px;color:var(--ink-3);">Support functions</div></div>
+        </div>
+      </div>
+
+      <!-- Stage 2 -->
+      <div class="org-stage" id="stage2">
+        <div style="background:#F5F3FF;border-radius:10px;padding:12px 16px;margin-bottom:16px;font-size:13px;color:#6D28D9;">
+          <strong>Stage 2 — Scale (50–150 FTE)</strong> · Focus: functional depth, first VP hires, India-owned deliverables. The founder-leader risk emerges here.
+        </div>
+        <div class="org-tree">
+          <div class="org-level" style="margin-bottom:12px;">
+            <div class="ob-hq org-box"><div class="org-box-band"></div><div class="org-box-title">US Parent / HQ</div><div class="org-box-sub">Strategic oversight</div></div>
+          </div>
+          <div class="org-line"></div>
+          <div class="org-level" style="margin-bottom:12px;">
+            <div class="ob-cxo org-box"><div class="org-box-band"></div><div class="org-box-title">GCC Head / MD India</div><div class="org-box-sub">In global leadership team<div class="hc-badge">1 person</div></div></div>
+          </div>
+          <div class="org-line"></div>
+          <div class="org-level" style="gap:16px;margin-bottom:12px;">
+            <div class="ob-vp org-box"><div class="org-box-band"></div><div class="org-box-title">VP Engineering</div><div class="org-box-sub"><div class="hc-badge">1 + 3–4 managers</div></div></div>
+            <div class="ob-vp org-box"><div class="org-box-band"></div><div class="org-box-title">VP Product / Design</div><div class="org-box-sub"><div class="hc-badge">1 + 2–3 leads</div></div></div>
+            <div class="ob-vp org-box"><div class="org-box-band"></div><div class="org-box-title">Director HR & TA</div><div class="org-box-sub"><div class="hc-badge">4–6 people</div></div></div>
+            <div class="ob-vp org-box"><div class="org-box-band"></div><div class="org-box-title">Finance & Legal</div><div class="org-box-sub"><div class="hc-badge">3–4 people</div></div></div>
+          </div>
+          <div class="org-level">
+            <div class="ob-ic org-box" style="min-width:300px;max-width:500px;"><div class="org-box-band"></div><div class="org-box-title">Functional Teams</div><div class="org-box-sub">Frontend · Backend · Data · QA · DevOps · Analytics<div class="hc-badge">80–120 ICs</div></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stage 3 -->
+      <div class="org-stage" id="stage3">
+        <div style="background:#F0FDF4;border-radius:10px;padding:12px 16px;margin-bottom:16px;font-size:13px;color:#047857;">
+          <strong>Stage 3 — Strategic (150–400 FTE)</strong> · Focus: India leads global initiatives. AI integration underway. GCC head in CXO-level conversations.
+        </div>
+        <div class="org-tree">
+          <div class="org-level" style="margin-bottom:12px;">
+            <div class="ob-hq org-box"><div class="org-box-band"></div><div class="org-box-title">Global Board / CEO</div><div class="org-box-sub">GCC Head is direct report</div></div>
+          </div>
+          <div class="org-line"></div>
+          <div class="org-level" style="margin-bottom:12px;">
+            <div class="ob-cxo org-box"><div class="org-box-band"></div><div class="org-box-title">MD India / GCC Head</div><div class="org-box-sub">Owns P&L, global mandate<div class="hc-badge">1 person</div></div></div>
+          </div>
+          <div class="org-line"></div>
+          <div class="org-level" style="gap:12px;margin-bottom:12px;flex-wrap:wrap;">
+            <div class="ob-vp org-box"><div class="org-box-band"></div><div class="org-box-title">VP Engineering</div><div class="org-box-sub"><div class="hc-badge">1 + 80–120 team</div></div></div>
+            <div class="ob-vp org-box"><div class="org-box-band"></div><div class="org-box-title">VP AI / Data</div><div class="org-box-sub"><div class="hc-badge">1 + 30–50 team</div></div></div>
+            <div class="ob-vp org-box"><div class="org-box-band"></div><div class="org-box-title">VP Product</div><div class="org-box-sub"><div class="hc-badge">1 + 20–30 team</div></div></div>
+            <div class="ob-vp org-box"><div class="org-box-band"></div><div class="org-box-title">Head of People</div><div class="org-box-sub"><div class="hc-badge">12–15 team</div></div></div>
+            <div class="ob-vp org-box"><div class="org-box-band"></div><div class="org-box-title">CFO India</div><div class="org-box-sub"><div class="hc-badge">6–8 team</div></div></div>
+          </div>
+        </div>
+        <div style="background:#FFFBEB;border:1.5px solid #FCD34D;border-radius:8px;padding:12px 16px;margin-top:12px;font-size:13px;color:#B45309;">
+          ⚠️ <strong>Stage 3 risk:</strong> The GCC head who built 0→150 is often not the right person for 150→400. Assess fit and plan transition before you hit the ceiling.
+        </div>
+      </div>
+
+      <!-- Stage 4 -->
+      <div class="org-stage" id="stage4">
+        <div style="background:linear-gradient(135deg,#0D1117,#0F3460);border-radius:10px;padding:12px 16px;margin-bottom:16px;font-size:13px;color:#67E8F9;">
+          <strong>Stage 4 — Innovation Hub (400+ FTE)</strong> · India owns products, patents, AI platforms. GCC head in global C-suite. Agentic AI fully integrated.
+        </div>
+        <div class="org-tree">
+          <div class="org-level" style="margin-bottom:12px;">
+            <div class="ob-hq org-box"><div class="org-box-band"></div><div class="org-box-title">Global C-Suite</div><div class="org-box-sub">India MD = peer, not report</div></div>
+          </div>
+          <div class="org-line"></div>
+          <div class="org-level" style="margin-bottom:12px;">
+            <div class="ob-cxo org-box"><div class="org-box-band"></div><div class="org-box-title">MD India / President APAC</div><div class="org-box-sub">Global ownership mandate<div class="hc-badge">C-suite level</div></div></div>
+          </div>
+          <div class="org-line"></div>
+          <div class="org-level" style="gap:10px;flex-wrap:wrap;margin-bottom:12px;">
+            <div class="ob-vp org-box"><div class="org-box-band"></div><div class="org-box-title">CTO India</div><div class="org-box-sub"><div class="hc-badge">150–200 team</div></div></div>
+            <div class="ob-vp org-box"><div class="org-box-band"></div><div class="org-box-title">Chief AI Officer India</div><div class="org-box-sub"><div class="hc-badge">60–80 team</div></div></div>
+            <div class="ob-vp org-box"><div class="org-box-band"></div><div class="org-box-title">CPO India</div><div class="org-box-sub"><div class="hc-badge">50–70 team</div></div></div>
+            <div class="ob-vp org-box"><div class="org-box-band"></div><div class="org-box-title">CHRO India</div><div class="org-box-sub"><div class="hc-badge">25–30 team</div></div></div>
+            <div class="ob-vp org-box"><div class="org-box-band"></div><div class="org-box-title">CFO India</div><div class="org-box-sub"><div class="hc-badge">15–20 team</div></div></div>
+          </div>
+          <div class="org-level">
+            <div class="ob-ic org-box" style="min-width:300px;max-width:600px;"><div class="org-box-band"></div><div class="org-box-title">AI-Augmented Delivery Teams</div><div class="org-box-sub">Hybrid agentic model — AI handles routine, humans own strategy & governance<div class="hc-badge">300–500+ ICs</div></div></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<hr class="divider" style="max-width:1100px;margin:48px auto 0;">
+
+
+<!-- ══════════════════════════════════════ -->
+<!-- TOOL 4 — BUDGET PLANNER -->
+<!-- ══════════════════════════════════════ -->
+<div id="budget" class="tool-section">
+  <div class="section-header">
+    <div class="section-num">Tool 04</div>
+    <div class="section-title">3-Year GCC Budget Planner</div>
+    <div class="section-desc">Edit the budget cells directly. Figures in Rs Lakhs (L). The totals update automatically.</div>
+  </div>
+
+  <div class="card">
+    <div class="card-head">
+      <div class="card-head-title">3-Year Budget Model</div>
+      <span style="font-size:12px;color:var(--ink-3);">Click any number to edit · Rs Lakhs</span>
+    </div>
+    <div class="card-body">
+      <div style="overflow-x:auto;">
+        <table class="budget-table" id="budgetTable">
+          <thead>
+            <tr>
+              <th>Category</th>
+              <th>Line Item</th>
+              <th>Year 1 (Rs L)</th>
+              <th>Year 2 (Rs L)</th>
+              <th>Year 3 (Rs L)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="budget-row-a"><td class="bcat bcat-a" rowspan="3">People</td><td>Salaries & wages</td><td><input class="budget-input bt" value="600" oninput="calcBudget()"></td><td><input class="budget-input bt" value="900" oninput="calcBudget()"></td><td><input class="budget-input bt" value="1300" oninput="calcBudget()"></td></tr>
+            <tr class="budget-row-a"><td>PF / ESIC / Gratuity (est. 14%)</td><td><input class="budget-input bt" value="84" oninput="calcBudget()"></td><td><input class="budget-input bt" value="126" oninput="calcBudget()"></td><td><input class="budget-input bt" value="182" oninput="calcBudget()"></td></tr>
+            <tr class="budget-row-a"><td>Health insurance & benefits</td><td><input class="budget-input bt" value="30" oninput="calcBudget()"></td><td><input class="budget-input bt" value="45" oninput="calcBudget()"></td><td><input class="budget-input bt" value="65" oninput="calcBudget()"></td></tr>
+
+            <tr class="budget-row-b"><td class="bcat bcat-b" rowspan="2">Real Estate</td><td>Office lease (per sq ft/month)</td><td><input class="budget-input bt" value="80" oninput="calcBudget()"></td><td><input class="budget-input bt" value="100" oninput="calcBudget()"></td><td><input class="budget-input bt" value="130" oninput="calcBudget()"></td></tr>
+            <tr class="budget-row-b"><td>Fit-out & infrastructure (one-time)</td><td><input class="budget-input bt" value="60" oninput="calcBudget()"></td><td><input class="budget-input bt" value="0" oninput="calcBudget()"></td><td><input class="budget-input bt" value="40" oninput="calcBudget()"></td></tr>
+
+            <tr class="budget-row-c"><td class="bcat bcat-c" rowspan="3">Legal & Compliance</td><td>Entity setup & registration</td><td><input class="budget-input bt" value="5" oninput="calcBudget()"></td><td><input class="budget-input bt" value="0" oninput="calcBudget()"></td><td><input class="budget-input bt" value="0" oninput="calcBudget()"></td></tr>
+            <tr class="budget-row-c"><td>Ongoing legal & CA retainer</td><td><input class="budget-input bt" value="15" oninput="calcBudget()"></td><td><input class="budget-input bt" value="18" oninput="calcBudget()"></td><td><input class="budget-input bt" value="22" oninput="calcBudget()"></td></tr>
+            <tr class="budget-row-c"><td>DPDP Act compliance</td><td><input class="budget-input bt" value="20" oninput="calcBudget()"></td><td><input class="budget-input bt" value="8" oninput="calcBudget()"></td><td><input class="budget-input bt" value="5" oninput="calcBudget()"></td></tr>
+
+            <tr class="budget-row-d"><td class="bcat bcat-d" rowspan="2">Recruitment</td><td>Talent acquisition fees (15–18% CTC)</td><td><input class="budget-input bt" value="90" oninput="calcBudget()"></td><td><input class="budget-input bt" value="60" oninput="calcBudget()"></td><td><input class="budget-input bt" value="70" oninput="calcBudget()"></td></tr>
+            <tr class="budget-row-d"><td>GCC leadership sign-on & relocation</td><td><input class="budget-input bt" value="80" oninput="calcBudget()"></td><td><input class="budget-input bt" value="30" oninput="calcBudget()"></td><td><input class="budget-input bt" value="40" oninput="calcBudget()"></td></tr>
+
+            <tr class="budget-row-e"><td class="bcat bcat-e" rowspan="2">Technology</td><td>IT equipment & licenses</td><td><input class="budget-input bt" value="50" oninput="calcBudget()"></td><td><input class="budget-input bt" value="60" oninput="calcBudget()"></td><td><input class="budget-input bt" value="80" oninput="calcBudget()"></td></tr>
+            <tr class="budget-row-e"><td>AI tools & platform subscriptions</td><td><input class="budget-input bt" value="25" oninput="calcBudget()"></td><td><input class="budget-input bt" value="45" oninput="calcBudget()"></td><td><input class="budget-input bt" value="80" oninput="calcBudget()"></td></tr>
+
+            <tr class="budget-row-f"><td class="bcat bcat-f" rowspan="2">Learning & Attrition</td><td>L&D, training & certifications</td><td><input class="budget-input bt" value="20" oninput="calcBudget()"></td><td><input class="budget-input bt" value="35" oninput="calcBudget()"></td><td><input class="budget-input bt" value="50" oninput="calcBudget()"></td></tr>
+            <tr class="budget-row-f"><td>Attrition replacement buffer (15%)</td><td><input class="budget-input bt" value="45" oninput="calcBudget()"></td><td><input class="budget-input bt" value="60" oninput="calcBudget()"></td><td><input class="budget-input bt" value="85" oninput="calcBudget()"></td></tr>
+
+            <tr class="budget-total">
+              <td colspan="2">TOTAL</td>
+              <td id="bY1">—</td>
+              <td id="bY2">—</td>
+              <td id="bY3">—</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="budget-summary" id="budgetSummary">
+        <div class="budget-sum-card bsc-1">
+          <div class="bsc-n" id="bsY1">—</div>
+          <div class="bsc-l">Year 1 Total (Rs Cr)</div>
+        </div>
+        <div class="budget-sum-card bsc-2">
+          <div class="bsc-n" id="bsY2">—</div>
+          <div class="bsc-l">Year 2 Total (Rs Cr)</div>
+        </div>
+        <div class="budget-sum-card bsc-3">
+          <div class="bsc-n" id="bsY3">—</div>
+          <div class="bsc-l">Year 3 Total (Rs Cr)</div>
+        </div>
+        <div class="budget-sum-card bsc-4">
+          <div class="bsc-n" id="bsTotal">—</div>
+          <div class="bsc-l">3-Year Total (Rs Cr)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- CTA BAND -->
+<div class="cta-band">
+  <h2>Building a GCC in India?</h2>
+  <p>MSH India has been setting up and staffing GCCs from Kolkata and Bengaluru since 2012. Let's have an honest conversation.</p>
+  <a href="https://www.linkedin.com/in/sayan-bhattacharya-52917bb/" class="cta-btn" target="_blank">Connect on LinkedIn</a>
+  <a href="#cost" class="cta-btn-ghost">Use the toolkit again ↑</a>
+  <div class="author-card">
+    <div class="author-avatar">SB</div>
+    <div>
+      <div class="author-name">Sayan Bhattacharya</div>
+      <div class="author-role">MD, MSH India · Talent Solutions & IT Offshoring for India GCCs<br>Kolkata & Bengaluru · 20+ years in India's tech talent market</div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+// ── COST CALCULATOR ──
+const USD = 94.5;
+const cityFactor = { blr:1, hyd:0.83, pun:0.75, che:0.82, ncr:1, kol:0.65 };
+const cityRE     = { blr:100, hyd:75, pun:67, che:70, ncr:105, kol:45 }; // per sqft/month
+const avgCTC     = { junior:12, mid:20, senior:32, mixed:24 }; // LPA
+const entityAdder= { wos:1, eor:1.12, bot:1.08 };
+
+function lakh(n){ return 'Rs '+n.toFixed(1)+' L'; }
+function cr(n){ return 'Rs '+( n/100 ).toFixed(2)+' Cr'; }
+function usd(n){ return '~$'+(n*100000/USD/1000000).toFixed(2)+'M'; }
+
+function calcCost(){
+  const hc   = parseInt(document.getElementById('hc').value)||50;
+  const city = document.getElementById('city').value;
+  const prof = document.getElementById('profile').value;
+  const ent  = document.getElementById('entity').value;
+  const attr = parseInt(document.getElementById('attrition').value)/100;
+  const infl = parseInt(document.getElementById('inflation').value)/100;
+
+  const cf  = cityFactor[city];
+  const re  = cityRE[city];
+  const ef  = entityAdder[ent];
+  const ctc = avgCTC[prof];
+
+  // People: salary + benefits (14% statutory + 3% misc)
+  const salary   = hc * ctc * cf * ef;          // Rs Lakhs
+  const benefits = salary * 0.17;
+  const people   = salary + benefits;
+
+  // Real estate: sqft per person = 80, monthly cost
+  const sqft = hc * 80;
+  const reAnn = (sqft * re * 12) / 100000;      // Rs Lakhs
+
+  // Setup & compliance
+  const setup = ent === 'eor' ? 8 : ent === 'bot' ? 30 : 18; // Rs Lakhs
+
+  // Recruitment: 16% of first-year CTC for all new hires
+  const recruit = hc * ctc * cf * 0.16;
+
+  // Leadership premium (assumed 1 head + 3 VPs)
+  const leader = 100 + (cf * 60);               // Rs Lakhs (sign-on estimate)
+
+  // Attrition buffer
+  const attrBuf = people * attr * 0.5;
+
+  const total = people + reAnn + setup + recruit + leader + attrBuf;
+
+  document.getElementById('rPeople').textContent   = cr(people);
+  document.getElementById('rRE').textContent       = cr(reAnn);
+  document.getElementById('rSetup').textContent    = 'Rs '+setup+' L';
+  document.getElementById('rRecruit').textContent  = cr(recruit);
+  document.getElementById('rLeader').textContent   = cr(leader);
+  document.getElementById('rAttr').textContent     = cr(attrBuf);
+  document.getElementById('rTotal').textContent    = cr(total);
+  document.getElementById('rTotalUSD').textContent = usd(total);
+
+  // Bars
+  const items = [people, reAnn, setup, recruit, leader+attrBuf];
+  const pcts  = items.map(v=>Math.round(v/total*100));
+  const ids   = ['bPeople','bRE','bSetup','bRecruit','bOther'];
+  const pids  = ['pPeople','pRE','pSetup','pRecruit','pOther'];
+  ids.forEach((id,i)=>{
+    document.getElementById(id).style.width = pcts[i]+'%';
+    document.getElementById(pids[i]).textContent = pcts[i]+'%';
+  });
+}
+
+// ── CHECKLIST ──
+function showPhase(id, el){
+  document.querySelectorAll('.checklist-phase').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.phase-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  el.classList.add('active');
+}
+function updateProgress(){
+  const all   = document.querySelectorAll('.cl-check');
+  const done  = document.querySelectorAll('.cl-check:checked');
+  const pct   = Math.round(done.length/all.length*100);
+  document.getElementById('progressFill').style.width = pct+'%';
+  document.getElementById('progressPct').textContent = done.length+' / '+all.length+' complete';
+}
+
+// ── ORG CHART ──
+function showOrg(id, el){
+  document.querySelectorAll('.org-stage').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.org-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  el.classList.add('active');
+}
+
+// ── BUDGET ──
+function calcBudget(){
+  const rows = document.querySelectorAll('.bt');
+  let y1=0,y2=0,y3=0;
+  for(let i=0;i<rows.length;i+=3){
+    y1 += parseFloat(rows[i].value)||0;
+    y2 += parseFloat(rows[i+1].value)||0;
+    y3 += parseFloat(rows[i+2].value)||0;
+  }
+  const tot = y1+y2+y3;
+  document.getElementById('bY1').textContent = y1.toFixed(0)+' L';
+  document.getElementById('bY2').textContent = y2.toFixed(0)+' L';
+  document.getElementById('bY3').textContent = y3.toFixed(0)+' L';
+  document.getElementById('bsY1').textContent = (y1/100).toFixed(1);
+  document.getElementById('bsY2').textContent = (y2/100).toFixed(1);
+  document.getElementById('bsY3').textContent = (y3/100).toFixed(1);
+  document.getElementById('bsTotal').textContent = (tot/100).toFixed(1);
+}
+
+// ── NAV HIGHLIGHT ──
+document.querySelectorAll('.nav a').forEach(a=>{
+  a.addEventListener('click', function(){
+    document.querySelectorAll('.nav a').forEach(x=>x.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+
+// ── INIT ──
+calcCost();
+calcBudget();
+</script>
+</body>
+</html>
