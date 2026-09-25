@@ -379,6 +379,72 @@ body {
 
 /* ── PRINT ── */
 @media print { .site-header, .cta-band, .nav { display: none; } }
+
+/* ── MOBILE ── */
+@media(max-width:640px){
+
+  /* Header — hide nav links, show only logo */
+  .nav { display: none; }
+  .header-inner { padding: 12px 16px; }
+
+  /* Hero */
+  .hero { padding: 44px 20px 40px; }
+  .hero h1 { font-size: 32px; }
+  .hero-sub { font-size: 15px; }
+  .tool-pills { gap: 8px; }
+  .pill { font-size: 12px; padding: 7px 14px; }
+
+  /* Section */
+  .tool-section { padding: 36px 16px 16px; }
+  .section-title { font-size: 22px; }
+  .divider { margin: 32px 0 0; }
+
+  /* Card */
+  .card-body { padding: 16px; }
+  .card-head { padding: 13px 16px; flex-direction: column; align-items: flex-start; gap: 4px; }
+
+  /* Calculator */
+  .calc-grid { grid-template-columns: 1fr; }
+  .result-grid { grid-template-columns: 1fr 1fr; }
+  .result-value { font-size: 16px; }
+  .result-total-value { font-size: 22px; }
+  .slider-row { flex-wrap: wrap; gap: 6px; }
+  .slider-row label { min-width: 100%; white-space: normal; }
+  .slider-row input[type=range] { width: 100%; }
+  .cost-bar-label { min-width: 100px; font-size: 11px; }
+
+  /* Checklist tabs */
+  .phase-tab { font-size: 12px; padding: 6px 12px; }
+
+  /* Org chart — stack boxes vertically on mobile */
+  .org-box { min-width: 120px; max-width: 140px; padding: 10px 12px; }
+  .org-box-title { font-size: 11px; }
+  .org-box-sub { font-size: 10px; }
+  .org-level { gap: 8px; }
+  .org-btn { font-size: 12px; padding: 6px 12px; }
+  .org-row::before { display: none; }
+
+  /* Budget table — horizontal scroll */
+  .budget-table th { font-size: 10px; padding: 5px 8px; }
+  .budget-table td { padding: 9px 8px; font-size: 12px; }
+  .budget-input { width: 80px; font-size: 12px; padding: 4px 6px; }
+  .budget-summary { grid-template-columns: 1fr 1fr; }
+  .bsc-n { font-size: 18px; }
+
+  /* CTA band */
+  .cta-band { padding: 40px 20px; }
+  .cta-band h2 { font-size: 22px; }
+  .cta-band p { font-size: 14px; }
+  .cta-btn, .cta-btn-ghost { display: block; margin: 8px auto; max-width: 260px; text-align: center; }
+
+  /* Author card */
+  .author-card { flex-direction: column; text-align: center; padding: 20px; }
+  .author-name { font-size: 15px; }
+  .author-role { font-size: 12px; }
+
+  /* Org chart stage info boxes */
+  .org-stage > div:first-child { font-size: 12px; }
+}
 </style>
 </head>
 <body>
@@ -648,7 +714,7 @@ body {
         <div class="org-btn active" onclick="showOrg('stage1',this)">Stage 1 · Pilot (20–50)</div>
         <div class="org-btn" onclick="showOrg('stage2',this)">Stage 2 · Scale (50–150)</div>
         <div class="org-btn" onclick="showOrg('stage3',this)">Stage 3 · Strategic (150–400)</div>
-        <div class="org-btn" onclick="showOrg('stage4',this)">Stage 4 · Innovation (400+)</div>
+        <div class="org-btn" onclick="showOrg('stage4',this)">Stage 4 · Innovation (400+)</div></div>
       </div>
 
       <!-- Stage 1 -->
@@ -656,7 +722,7 @@ body {
         <div style="background:#EFF6FF;border-radius:10px;padding:12px 16px;margin-bottom:16px;font-size:13px;color:#1D4ED8;">
           <strong>Stage 1 — Pilot (20–50 FTE)</strong> · Focus: prove the model, establish delivery, set culture. Lean structure, high accountability.
         </div>
-        <div class="org-tree">
+        <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;"><div class="org-tree">
           <div class="org-level" style="margin-bottom:12px;">
             <div class="ob-hq org-box"><div class="org-box-band"></div><div class="org-box-title">US Parent / HQ</div><div class="org-box-sub">Global sponsor</div></div>
           </div>
@@ -678,7 +744,7 @@ body {
           <div style="background:#F0FDF4;border-radius:8px;padding:12px;text-align:center;"><div style="font-size:20px;font-weight:900;color:#059669;">70%</div><div style="font-size:11px;color:var(--ink-3);">ICs & delivery</div></div>
           <div style="background:#EFF6FF;border-radius:8px;padding:12px;text-align:center;"><div style="font-size:20px;font-weight:900;color:#1D4ED8;">20%</div><div style="font-size:11px;color:var(--ink-3);">Management</div></div>
           <div style="background:#FFF7ED;border-radius:8px;padding:12px;text-align:center;"><div style="font-size:20px;font-weight:900;color:#D97706;">10%</div><div style="font-size:11px;color:var(--ink-3);">Support functions</div></div>
-        </div>
+        </div></div>
       </div>
 
       <!-- Stage 2 -->
@@ -686,7 +752,7 @@ body {
         <div style="background:#F5F3FF;border-radius:10px;padding:12px 16px;margin-bottom:16px;font-size:13px;color:#6D28D9;">
           <strong>Stage 2 — Scale (50–150 FTE)</strong> · Focus: functional depth, first VP hires, India-owned deliverables. The founder-leader risk emerges here.
         </div>
-        <div class="org-tree">
+        <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;"><div class="org-tree">
           <div class="org-level" style="margin-bottom:12px;">
             <div class="ob-hq org-box"><div class="org-box-band"></div><div class="org-box-title">US Parent / HQ</div><div class="org-box-sub">Strategic oversight</div></div>
           </div>
@@ -704,7 +770,7 @@ body {
           <div class="org-level">
             <div class="ob-ic org-box" style="min-width:300px;max-width:500px;"><div class="org-box-band"></div><div class="org-box-title">Functional Teams</div><div class="org-box-sub">Frontend · Backend · Data · QA · DevOps · Analytics<div class="hc-badge">80–120 ICs</div></div></div>
           </div>
-        </div>
+        </div></div>
       </div>
 
       <!-- Stage 3 -->
@@ -712,7 +778,7 @@ body {
         <div style="background:#F0FDF4;border-radius:10px;padding:12px 16px;margin-bottom:16px;font-size:13px;color:#047857;">
           <strong>Stage 3 — Strategic (150–400 FTE)</strong> · Focus: India leads global initiatives. AI integration underway. GCC head in CXO-level conversations.
         </div>
-        <div class="org-tree">
+        <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;"><div class="org-tree">
           <div class="org-level" style="margin-bottom:12px;">
             <div class="ob-hq org-box"><div class="org-box-band"></div><div class="org-box-title">Global Board / CEO</div><div class="org-box-sub">GCC Head is direct report</div></div>
           </div>
@@ -731,7 +797,7 @@ body {
         </div>
         <div style="background:#FFFBEB;border:1.5px solid #FCD34D;border-radius:8px;padding:12px 16px;margin-top:12px;font-size:13px;color:#B45309;">
           ⚠️ <strong>Stage 3 risk:</strong> The GCC head who built 0→150 is often not the right person for 150→400. Assess fit and plan transition before you hit the ceiling.
-        </div>
+        </div></div>
       </div>
 
       <!-- Stage 4 -->
@@ -739,7 +805,7 @@ body {
         <div style="background:linear-gradient(135deg,#0D1117,#0F3460);border-radius:10px;padding:12px 16px;margin-bottom:16px;font-size:13px;color:#67E8F9;">
           <strong>Stage 4 — Innovation Hub (400+ FTE)</strong> · India owns products, patents, AI platforms. GCC head in global C-suite. Agentic AI fully integrated.
         </div>
-        <div class="org-tree">
+        <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;"><div class="org-tree">
           <div class="org-level" style="margin-bottom:12px;">
             <div class="ob-hq org-box"><div class="org-box-band"></div><div class="org-box-title">Global C-Suite</div><div class="org-box-sub">India MD = peer, not report</div></div>
           </div>
@@ -784,7 +850,7 @@ body {
       <span style="font-size:12px;color:var(--ink-3);">Click any number to edit · Rs Lakhs</span>
     </div>
     <div class="card-body">
-      <div style="overflow-x:auto;">
+      <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;">
         <table class="budget-table" id="budgetTable">
           <thead>
             <tr>
